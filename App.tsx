@@ -5,12 +5,13 @@
  * @format
  */
 
-import { NewAppScreen } from '@react-native/new-app-screen';
 import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+import Animated, {
+  LinearTransition,
+  SlideInDown,
+  SlideOutDown,
+} from 'react-native-reanimated';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -24,13 +25,26 @@ function App() {
 }
 
 function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
-
   return (
     <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
+      <Animated.View
+        entering={SlideInDown}
+        exiting={SlideOutDown}
+        layout={LinearTransition}
+        style={{
+          width: 200,
+          height: 200,
+          backgroundColor: 'blue',
+          zIndex: 1,
+        }}
+      />
+      <View
+        style={{
+          width: 200,
+          height: 200,
+          backgroundColor: 'red',
+          zIndex: 0,
+        }}
       />
     </View>
   );
